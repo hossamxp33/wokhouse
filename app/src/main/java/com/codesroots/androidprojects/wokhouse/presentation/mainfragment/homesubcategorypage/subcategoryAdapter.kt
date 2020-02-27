@@ -13,7 +13,7 @@ import com.codesroots.androidprojects.wokhouse.model.Subcategory
 import com.codesroots.androidprojects.wokhouse.presentation.ClickHandler
 
 
-class subcategoryAdapter(var listitem:ItemsModel, var activity: Context?):RecyclerView.Adapter<CustomViewHolderss>(){
+class subcategoryAdapter(var viewModel: CategoryViewModel,var listitem:ItemsModel, var activity: Context?):RecyclerView.Adapter<CustomViewHolderss>(){
 
 private  val listItemData:ItemsModel = listitem
 
@@ -37,6 +37,8 @@ private  val listItemData:ItemsModel = listitem
     override fun onBindViewHolder(p0: CustomViewHolderss, p1: Int) {
 
         p0.bind(listitem.data!!.get(p1),activity!!)
+
+
     }
 
 

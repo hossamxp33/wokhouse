@@ -6,8 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 
-data class ItemsModel (
-    val data: List<ItemData>? = null
+data class ItemsModel (val data: List<ItemData>? = null
 )  : Parcelable {
 
 }

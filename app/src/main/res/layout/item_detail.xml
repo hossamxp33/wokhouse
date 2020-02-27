@@ -133,7 +133,6 @@
                 android:id="@+id/increase"
                 android:layout_width="31dp"
                 android:layout_height="30dp"
-
                 android:layout_margin="5dp"
                 android:background="@drawable/add"
                 android:text="+" />

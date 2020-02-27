@@ -7,29 +7,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.codesroots.androidprojects.wokhouse.databinding.BottomNavigationRowBinding
 import com.codesroots.androidprojects.wokhouse.presentation.mainfragment.departmentdetails.model.PageViewModel
 import com.codesroots.androidprojects.wokhouse.R
+import com.codesroots.androidprojects.wokhouse.model.BottomNavData
 
 
-class NavigationAdapter(val  viewModel: PageViewModel): RecyclerView.Adapter<NavigationAdapter.CustomViewHolder>() {
-
-    val row_title = listOf("الرئيسية", "تقييم زيارتك", "عن وك هاوس")
-
+class NavigationAdapter(val  viewModel: PageViewModel,val bottomNavTitle: ArrayList<BottomNavData>): RecyclerView.Adapter<NavigationAdapter.CustomViewHolder>() {
 
 
 
 
     override fun getItemCount(): Int {
-        return  row_title.size
+        return  bottomNavTitle.size
     }
 
-// Change Color ONclick !!!!!!!!!!
 
-    var row_index = 0;
 
     override fun onBindViewHolder(p0: CustomViewHolder, p1: Int) {
-        p0.bind(viewModel,p1,row_title.get(p1))
-
-
-
+        p0.bind(viewModel,p1,bottomNavTitle.get(p1))
 
     }
 
@@ -46,11 +39,12 @@ class NavigationAdapter(val  viewModel: PageViewModel): RecyclerView.Adapter<Nav
         private val binding: BottomNavigationRowBinding
     ) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(viewModel:PageViewModel, index:Int,string: String) {
+        fun bind(viewModel:PageViewModel, index:Int,data: BottomNavData) {
 
             binding.index = index
             binding.viewmodel = viewModel
-    binding.name = string
+            binding.data = data
+
         }
     }
 

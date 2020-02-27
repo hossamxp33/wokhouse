@@ -12,6 +12,9 @@
     <color name="yello">#FFEB3B</color>
     <color name="OpacityYello">#50FFEB3B</color>
     <color name="red">#FF0000</color>
+    <color name="LogoRed">#be1e2d</color>
+    <color name="white">#FFFFFF</color>
+    <color name="duskYellow">#FFEB3B</color>
 
 
 </resources>

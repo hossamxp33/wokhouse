@@ -12,11 +12,17 @@ import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Context
 import android.content.Intent
 import android.text.Html
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.codesroots.androidprojects.wokhouse.R
+import com.codesroots.androidprojects.wokhouse.model.BottomNavData
 import com.codesroots.androidprojects.wokhouse.model.CategoryModel
 import com.codesroots.androidprojects.wokhouse.model.ItemData
 import com.codesroots.androidprojects.wokhouse.presentation.mainfragment.mainfragment_adapter.NavigationAdapter
@@ -27,36 +33,50 @@ import com.codesroots.androidprojects.wokhouse.presentation.mainfragment.departm
 import com.codesroots.androidprojects.wokhouse.presentation.mainfragment.homesubcategorypage.SubcatPages
 import com.codesroots.androidprojects.wokhouse.presentation.AboutUs.AboutUs
 import com.codesroots.androidprojects.wokhouse.presentation.Rate.RateFragment
-import com.codesroots.androidprojects.wokhouse.presentation.your_order.Yourorderlist
-import kotlinx.android.synthetic.main.subcategory_items.*
+
 
 @BindingAdapter("app:imageResource")
-fun setImageResource(imageView: AppCompatImageView, resource: String?) {
+fun setImageResource(imageView: ImageView, resource: String?) {
     Glide.with(imageView.context).load(resource).into(imageView)
 }
 @BindingAdapter("app:TextHTML")
 fun setTextHTML(textview: TextView, resource: String?) {
     textview.text =  Html.fromHtml(resource).toString()
 }
+
+
+
+
+
+
 class MainActivity : AppCompatActivity() {
+
+    val BottomNavTitle= ArrayList<BottomNavData>()
+
     private lateinit var pageViewModel: PageViewModel
     val adapter = ViewPagerAdapter(supportFragmentManager)
+
 
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.codesroots.androidprojects.wokhouse.R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
 
 
         pageViewModel = ViewModelProviders.of(this).get(PageViewModel::class.java)
         NavigationRecycle.layoutManager =
             LinearLayoutManager(this, OrientationHelper.HORIZONTAL, true)
-        NavigationRecycle.adapter = NavigationAdapter(pageViewModel)
+        NavigationRecycle.adapter = NavigationAdapter(pageViewModel,BottomNavTitle)
+
 
         adapter.addFragment(MainFragment(), "main")
         adapter.addFragment(RateFragment(), "favorites")
         adapter.addFragment(AboutUs(), "menu")
+
+        BottomNavTitle.add(BottomNavData("الرئيسية", R.drawable.paifang))
+        BottomNavTitle.add(BottomNavData("تقييم زيارتك", R.drawable.star))
+        BottomNavTitle.add(BottomNavData("عن المطعم", R.drawable.belief))
 
         mainviewpager.adapter = adapter
         pageViewModel.CompanyResponseLD?.observe(this, Observer {
@@ -64,6 +84,7 @@ class MainActivity : AppCompatActivity() {
 
             adapter.notifyDataSetChanged()
             mainviewpager.currentItem = it
+
 
 
         })
@@ -77,7 +98,6 @@ class ClickHandler {
     fun SwitchToMenu(context: Context,int: Int,data:CategoryModel){
 
         val homeIntent = Intent(context, DepartmentDetailActivity()::class.java)
-
         homeIntent.putExtra("position",int)
         homeIntent.putExtra("myobj", data)
         (context as MainActivity).startActivity(homeIntent)
@@ -107,6 +127,10 @@ class ClickHandler {
 
 
     }
+
+fun setColor(){
+
+}
 
 }
 

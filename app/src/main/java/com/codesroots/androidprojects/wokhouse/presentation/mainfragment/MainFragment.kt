@@ -21,6 +21,7 @@ import com.codesroots.androidprojects.wokhouse.presentation.mainfragment.departm
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.viewpagerindicator.CirclePageIndicator
+import kotlinx.android.synthetic.main.fragment_common.*
 import kotlinx.android.synthetic.main.fragment_common.view.*
 import okhttp3.*
 import java.io.IOException
@@ -28,12 +29,12 @@ import java.util.*
 
 class MainFragment : Fragment(){
 
-    private lateinit var pageViewModel: PageViewModel
+    private lateinit var viewModel : PageViewModel
+    lateinit var MenuAdapter: MenuAdapter
+
     var  data : CategoryModel? = null
-
-    var pager: ViewPager? = null
+    var pagers: ViewPager? = null
     var indicator: CirclePageIndicator? = null
-
 
     var NUM_PAGES = 0
     var currentPage = 0
@@ -47,21 +48,38 @@ class MainFragment : Fragment(){
 
         var view = inflater.inflate(R.layout.fragment_common, container, false)
 
-        pager = view!!.pager
+        pagers = view!!.pager
 
         indicator = view.indicator
 
-        Timer()
-        getCategories()
+
+
 
         view.recycelView_main.layoutManager = GridLayoutManager(activity,2)
-        pageViewModel = ViewModelProviders.of(this).get(PageViewModel:: class.java)
+        viewModel = ViewModelProviders.of(this).get(PageViewModel:: class.java)
+        viewModel.getcompanyData()
+        viewModel.getsliderData()
 
+        pagers = view!!.pager
+        viewModel.CategoryResponseLD?.observe(this, androidx.lifecycle.Observer {
+            MenuAdapter =
+                MenuAdapter(
+                    viewModel,
+                    context as FragmentActivity,
+                    it
+                )
+            view.recycelView_main.layoutManager = GridLayoutManager(activity,2)
+            view.recycelView_main?.adapter = MenuAdapter
+        })
 
-        fetchJson()
+        viewModel.SliderResponseLD?.observe(this, androidx.lifecycle.Observer {
+            pagers!!.adapter = it?.let { it1 -> SliderAdapter(activity!!, it1.data!!) }
+            indicator!!.setViewPager(view.pager)
+            it.data!!.let { it1 -> init(it1.size) }
+
+        })
+        Timer()
         return view
-
-
 
     }
 
@@ -75,7 +93,7 @@ class MainFragment : Fragment(){
             if (currentPage == NUM_PAGES) {
                 currentPage = 0
             }
-            pager?.setCurrentItem(currentPage++, true)
+            pagers?.setCurrentItem(currentPage++, true)
         }
 
         val swipeTimer = Timer()
@@ -96,70 +114,10 @@ class MainFragment : Fragment(){
 
 
 
-    private  fun fetchJson(){
-        println("Attempting to Fetch Json")
-
-        val url = "http://wokhouse.codesroots.com/api/sliders.json"
-
-        val request = Request.Builder()
-            .url(url)
-            .build()
-
-        val client = OkHttpClient()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onResponse(call: Call, response: Response) {
-                val  body = response.body?.string()
-                println(body)
-                val gson = GsonBuilder().create()
-                val items = Gson().fromJson(body, SliderData::class.java)
-
-                activity!!.runOnUiThread {
-                    pager!!.adapter = SliderAdapter(activity!!,items!!.data!!)
-                    indicator!!.setViewPager(pager)
-                    init(items.data!!.size)
-
-                }
-            }
-            override fun onFailure(call: Call, e: IOException) {
-                println("Failed to execute request")
-            }
-        })
-    }
 
 
-    private  fun getCategories(){
-        println("Attempting to Fetch Json")
-        val url = "http://wokhouse.codesroots.com/api/Categories/getitemcategories.json?fbclid=IwAR0TlPjFkGzVyYW9JBnOtGwa2-W5hQbI8xLisw0pDiFWteiMmwWee9clEWQ"
-        val request = Request.Builder()
-            .url(url)
-            .build()
-
-        val client = OkHttpClient()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onResponse(call: Call, response: Response) {
-                val  body = response.body?.string()
-                println(body)
 
 
-                val gson = GsonBuilder().create()
-                val items = Gson().fromJson(body, CategoryModel::class.java)
-
-                activity!!.runOnUiThread {
-                    data = items
-
-                    view?.recycelView_main?.adapter = MenuAdapter(pageViewModel,
-                        context as FragmentActivity, items )
-                }
-
-            }
-            override fun onFailure(call: Call, e: IOException) {
-                println("Failed to execute request")
-
-            }
-
-
-        })
-    }
 
 }
 

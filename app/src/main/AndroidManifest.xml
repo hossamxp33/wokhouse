@@ -23,7 +23,7 @@
         </activity>
 
         <activity android:name=".presentation.mainfragment.departmentdetails.DepartmentDetailActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+            android:theme="@style/Department"
             android:label="Department Detail"
             android:launchMode="singleTop">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
@@ -31,7 +31,7 @@
         </activity>
 
         <activity android:name=".presentation.mainfragment.homesubcategorypage.SubcatPages"
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+            android:theme="@style/HiddenTitleTheme"
             android:label=""
             android:launchMode="singleTop">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
@@ -39,7 +39,7 @@
         </activity>
 
         <activity android:name=".presentation.mainfragment.ItemDetail.ItemDetail"
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+            android:theme="@style/HiddenTitleTheme"
             android:label="Item Detials"
             android:launchMode="singleTop">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
@@ -48,7 +48,7 @@
         </activity>
 
         <activity android:name=".presentation.your_order.Yourorderlist"
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:label="Your order"
             android:launchMode="singleTop">
 

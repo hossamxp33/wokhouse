@@ -2,6 +2,8 @@
 <layout
     xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/layout"
+
+
     >
 
 
@@ -9,9 +11,9 @@
         <variable
             name="viewmodel"
             type="com.codesroots.androidprojects.wokhouse.presentation.mainfragment.departmentdetails.model.PageViewModel"/>
-<variable
-    name="name"
-    type="String" />
+  <variable
+    name="data"
+    type="com.codesroots.androidprojects.wokhouse.model.BottomNavData" />
 
         <variable
             name="index"
@@ -22,7 +24,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:textAlignment="center"
         android:onClick="@{() -> viewmodel.setIndex(index)}"
+        android:background="@{index.equals(0) ? @color/LogoRed : @color/white}"
         android:orientation="vertical">
 
 
@@ -30,18 +36,30 @@
             android:id="@+id/bottomRowName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
             android:fontFamily="@font/lobster_regular"
-            android:paddingLeft="20dp"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
             android:paddingTop="10dp"
-            android:paddingRight="20dp"
             android:paddingBottom="10dp"
-            android:text="@{name}"
-            android:textAlignment="textStart"
-            android:textSize="14sp"
+            android:text="@{data.row_title}"
+            android:textAlignment="center"
+            android:textSize="13sp"
             android:textStyle="bold"
+            android:textColor="@{index.equals(0) ? @color/white : @color/LogoRed}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/icon"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            android:contentDescription="Icon"
+            app:imageResource="@{data.product_image}"
+            app:layout_constraintBottom_toBottomOf="@+id/bottomRowName"
+            app:layout_constraintStart_toEndOf="@+id/bottomRowName"
+            app:layout_constraintTop_toTopOf="@+id/bottomRowName"
+            app:srcCompat="@drawable/add" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

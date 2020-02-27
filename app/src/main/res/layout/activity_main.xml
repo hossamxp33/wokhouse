@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@color/LogoRed"
     android:paddingTop="10dp"
     tools:context=".presentation.MainActivity">
 
@@ -20,7 +20,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/tvMain"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:gravity="center"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -52,6 +52,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainviewpager"
         app:reverseLayout="true" />
 
 

@@ -33,8 +33,11 @@ class ItemDetail: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ItemDetailBinding>(this,R.layout.item_detail)
+
         val plus = findViewById<Button>(R.id.increase)
         val minus = findViewById<Button>(R.id.decrease)
+
+
         var extras = intent.extras
        // val value = extras!!.getInt("id")
         val itemdata = extras!!.getParcelable<ItemData>("itemdata")
@@ -44,6 +47,7 @@ class ItemDetail: AppCompatActivity() {
         val data = itemdata
         pagers = pager
         indicators = indicator
+
 
         pagers!!.adapter = ItemSliderAdapter(this , data!!.item_photo!!)
         indicators!!.setViewPager(pager)
